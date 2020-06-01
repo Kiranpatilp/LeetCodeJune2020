@@ -1,0 +1,55 @@
+Invert a binary tree.
+I/p :      
+     4
+   /   \
+  2     7
+ / \   / \
+1   3 6   9
+
+O/p:
+     4
+   /   \
+  7     2
+ / \   / \
+9   6 3   1
+
+
+
+Solution:
+Recusrsion:
+----------
+TreeNode* invertTree(TreeNode* root) {
+        if(!root) return root;
+        invertTree(root->left);
+        invertTree(root->right);
+        swap(root->left, root->right);
+        return root;
+ }
+ 
+ Iterative:
+ ---------
+ TreeNode* invertTree(TreeNode* root) {
+        queue<TreeNode*> q;
+        if(!root || (!root->left && !root->right))
+            return root;
+        q.push(root);
+         while(!q.empty())
+        {   
+            //Queue front.
+            TreeNode *temp = q.front();
+            q.pop();            
+            
+            //Swap
+            TreeNode *temp2 = temp->left;
+            temp->left = temp->right;
+            temp->right = temp2;
+            
+            //Left node add to queue
+            if(temp->left) q.push(temp->left);
+            //Right node add to queue
+            if(temp->right) q.push(temp->right);
+            
+        }
+        return root;
+ }
+ 
